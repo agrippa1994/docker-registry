@@ -16,6 +16,13 @@ services:
       - data:/var/lib/registry
       - ./registry.yml:/etc/docker/registry/config.yml:ro
       - ./auth:/auth
+    networks:
+      - http
 
 volumes:
   data:
+
+networks:
+  http:
+    external:
+      name: main
