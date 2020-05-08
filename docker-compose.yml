@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  registry:
+    restart: always
+    image: registry:2
+    environment:
+      VIRTUAL_PORT: 5000
+      VIRTUAL_HOST: ${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN}
+      LETSENCRYPT_EMAIL: ${MAIL}
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      - data:/var/lib/registry
+      - ./registry.yml:/etc/docker/registry/config.yml:ro
+      - ./auth:/auth
+
+volumes:
+  data:
